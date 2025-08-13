@@ -2,8 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Health))]
 public class EnemyCore : MonoBehaviour
 {
+    public float moveSpeed = 2.0f;
+    private Transform target;
+
+    private Rigidbody2D rb;
+    private Health health;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
+    }
+
+    private void OnEnable()
+    {
+        PlayerCore player = FindObjectOfType<PlayerCore>();
+        if(player != null)
+        {
+            SetTarget(player.transform);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +37,22 @@ public class EnemyCore : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        if (health.IsAlive == false || target == null)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
+        Vector2 dir = (target.position - transform.position).normalized;    // 벡터의 정규화 : 벡터의 크기를 1로 만들어줌. 방향정보만 필요할 때 사용.
+        rb.velocity = dir * moveSpeed;
+    }
+
+    public void SetTarget(Transform t)
+    {
+        target = t;
     }
 }
