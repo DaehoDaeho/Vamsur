@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDmageable
 {
-    public int maxHP = 30;
+    public int maxHP = 100;
     public int currentHP;
 
     public Action<int, int> OnHPChanged;
+    public Action<int, Vector3> OnDamaged;
     public Action OnDied;
 
     public bool IsAlive => currentHP > 0;
@@ -46,6 +47,11 @@ public class Health : MonoBehaviour, IDmageable
         if(OnHPChanged != null)
         {
             OnHPChanged.Invoke(currentHP, maxHP);
+        }
+
+        if(OnDamaged != null)
+        {
+            OnDamaged.Invoke(amount, hitPoint);
         }
 
         if(currentHP <= 0)
