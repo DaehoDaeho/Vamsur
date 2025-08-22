@@ -67,6 +67,12 @@ public class Health : MonoBehaviour, IDmageable
             OnDied.Invoke();
         }
 
+        EnemyDropper enemyDropper = GetComponent<EnemyDropper>();
+        if (enemyDropper != null)
+        {
+            enemyDropper.CreateOrb();
+        }
+
         Destroy(gameObject);
     }
 }

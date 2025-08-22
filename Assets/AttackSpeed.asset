@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8b29f80d347c646a2ce7ae5e36d4a4, type: 3}
   m_Name: AttackSpeed
   m_EditorClassIdentifier: 
-  displayName: "\uACF5\uACA9\uC18D\uB3C4"
-  description: "\uACF5\uACA9\uC18D\uB3C4\uB97C \uC62C\uB824\uC900\uB2E4."
+  displayName: Attack Speed
+  description: Attack Speed Up
   Icon: {fileID: 0}
   kind: 1
   value: 20

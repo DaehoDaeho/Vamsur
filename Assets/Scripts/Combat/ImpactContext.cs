@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
-public class ImpactContext : MonoBehaviour
+public class ImpactContext// : MonoBehaviour
 {
     public Transform target;    // 맞는 대상의 트랜스폼.
     public Vector3 hitPoint;    // 맞는 위치.

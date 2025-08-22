@@ -12,15 +12,15 @@ public class UpgradeApplier : MonoBehaviour
 
     private void Awake()
     {
-        if(player == null)
-        {
-            player = FindAnyObjectByType<PlayerCore>();
-        }
+        //if(player == null)
+        //{
+        //    player = FindAnyObjectByType<PlayerCore>();
+        //}
 
-        if(autoAttack == null)
-        {
-            autoAttack = FindAnyObjectByType<AutoAttackController>();
-        }
+        //if(autoAttack == null)
+        //{
+        //    autoAttack = FindAnyObjectByType<AutoAttackController>();
+        //}
     }
 
     public void Apply(UpgradeDefinitionSO def)

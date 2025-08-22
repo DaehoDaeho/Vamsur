@@ -30,7 +30,7 @@ public class UpgradePopupUI : MonoBehaviour
 
     public void ShowChoices(List<UpgradeDefinitionSO> choices)
     {
-        current = choices ?? new List<UpgradeDefinitionSO>();
+        current = choices;// ?? new List<UpgradeDefinitionSO>();
 
         for(int i=0; i<3; i++)
         {

@@ -11,6 +11,7 @@ public class EnemyXpReward : MonoBehaviour
     private void OnEnable()
     {
         health.OnDied += HandleDied;
+        playerxp = FindAnyObjectByType<XpSystem>();
     }
 
     private void OnDisable()
@@ -20,6 +21,6 @@ public class EnemyXpReward : MonoBehaviour
 
     private void HandleDied()
     {
-        playerxp?.AddExp(rewardxp);
+        //playerxp?.AddExp(rewardxp);
     }
 }

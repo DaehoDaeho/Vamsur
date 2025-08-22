@@ -9,7 +9,7 @@ public class PlayerCore : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private float baseMoveSpeed;    // 기본 속도.
-    private float movespeedMultiplier;  // 합성 배율.(1 = 변화 없음)
+    private float movespeedMultiplier = 1.0f;  // 합성 배율.(1 = 변화 없음)
     public float currentSpeedMagnitude
     {
         get;
