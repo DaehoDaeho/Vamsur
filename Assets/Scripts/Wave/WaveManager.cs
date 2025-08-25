@@ -25,6 +25,11 @@ public class WaveManager : MonoBehaviour
     public float intervalStepDelta = 0.2f;   // 난이도 상승 시 간격이 줄어드는 양
     public int batchStepEveryN = 2;        // 난이도 N번 올릴 때마다 한 번에 뽑는 수 +1
 
+    [Header("Difficulty / Boss")]
+    public DifficultyDirector difficulty;
+    public GameObject bossPrefab;
+    public Transform bossSpawnPoint;
+
     [Header("References (Optional)")]
     public Transform enemiesParent;          // 적들을 이 밑으로 정리(없어도 동작)
 
@@ -33,12 +38,17 @@ public class WaveManager : MonoBehaviour
     public TextMeshProUGUI timerText;    // "Next: 1.2s" 같은 표시
     public TextMeshProUGUI aliveText;    // "Alive: 12/30" 같은 표시
 
+    [Header("Public Read")]
+    public int publicWaveNumber = 1; // 외부에서 읽도록 공개
+
     // 내부 상태(쉬운 필드만 씀)
     private float nextSpawnTimer = 0f;
     private float elapsed = 0f;
     private int difficultyStepCount = 0;
     private int alive = 0;
     private int waveNumber = 1;            // 스폰이 한번 발생할 때마다 +1 하려고 사용
+
+    private bool bossSpawnedThisWave = false;
 
     void Start()
     {
@@ -87,12 +97,31 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        //==========================================================
+
+        if (difficulty != null)
+        {
+            if (difficulty.IsBossWave(publicWaveNumber) == true)
+            {
+                bool spawned = SpawnBossOnceThisWave();
+                if (spawned == true)
+                {
+                    // 보스를 스폰한 프레임에는 일반 스폰은 건너뛴다.
+                    nextSpawnTimer = spawnInterval;
+                    return;
+                }
+            }
+        }
+
+        //==========================================================
+
         // 스폰 타이밍 도착
         if (nextSpawnTimer <= 0f)
         {
             TrySpawnBatch();
             nextSpawnTimer = spawnInterval; // 타이머 리셋
             waveNumber = waveNumber + 1;    // "웨이브" 느낌용 카운터
+            publicWaveNumber = waveNumber; // 외부 공개값도 동기화
         }
     }
 
@@ -142,6 +171,24 @@ public class WaveManager : MonoBehaviour
             else
                 go = Instantiate(prefab, pos, Quaternion.identity);
         }
+
+        //==========================================================
+
+        if (difficulty != null)
+        {
+            bool makeElite = difficulty.RollIsElite();
+            if (makeElite == true)
+            {
+                EnemyEliteMarker mk = go.GetComponent<EnemyEliteMarker>();
+                if (mk == null)
+                {
+                    mk = go.AddComponent<EnemyEliteMarker>();
+                }
+                mk.ApplyElite(difficulty);
+            }
+        }
+
+        //==========================================================
 
         // 적 수 세기 위해 EnemyTracker 달기(없으면 붙여주기)
         EnemyTracker tracker = go.GetComponent<EnemyTracker>();
@@ -204,5 +251,56 @@ public class WaveManager : MonoBehaviour
         {
             aliveText.text = "Alive: " + alive.ToString() + " / " + maxAlive.ToString();
         }
+    }
+
+    bool SpawnBossOnceThisWave()
+    {
+        if (bossSpawnedThisWave == true)
+        {
+            return false;
+        }
+        if (bossPrefab == null)
+        {
+            return false;
+        }
+
+        Transform sp = bossSpawnPoint;
+        if (sp == null)
+        {
+            // 보스 스폰 포인트가 없으면 일반 스폰 포인트 중 하나 사용
+            if (spawnPoints != null && spawnPoints.Length > 0)
+            {
+                int idx = Random.Range(0, spawnPoints.Length);
+                sp = spawnPoints[idx];
+            }
+        }
+
+        if (sp == null)
+        {
+            return false;
+        }
+
+        GameObject boss;
+        if (PoolManager.Instance != null)
+        {
+            boss = PoolManager.Instance.Spawn(bossPrefab, sp.position, Quaternion.identity, enemiesParent);
+        }
+        else
+        {
+            if (enemiesParent != null)
+            {
+                boss = Instantiate(bossPrefab, sp.position, Quaternion.identity, enemiesParent);
+            }
+            else
+            {
+                boss = Instantiate(bossPrefab, sp.position, Quaternion.identity);
+            }
+        }
+
+        bossSpawnedThisWave = true;
+        // 웨이브가 증가하면 자동으로 false로 초기화되게 해주기(아래 한 줄을 waveNumber 증가 직후에 넣자)
+        // bossSpawnedThisWave = false;  ← 이 줄은 waveNumber가 증가한 직후에 넣어주세요.
+
+        return true;
     }
 }

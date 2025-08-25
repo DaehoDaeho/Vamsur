@@ -86,4 +86,44 @@ public class Health : MonoBehaviour, IDmageable
         currentHP = Mathf.Min(currentHP + amount, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP); // 3일차 UI바인더가 이 이벤트를 듣고 있음
     }
+
+    // Health.cs 내부에 아래 함수 하나 추가
+    public void MultiplyMaxHpPercent(float percent)
+    {
+        // percent가 60이면 최댓값을 1.6배로 만든다.
+        float mul = 1f + (percent / 100f);
+        if (mul < 0.1f)
+        {
+            mul = 0.1f;
+        }
+
+        int oldMax = maxHP;
+        int newMax = Mathf.RoundToInt(oldMax * mul);
+        if (newMax < 1)
+        {
+            newMax = 1;
+        }
+
+        int delta = newMax - oldMax;
+        maxHP = newMax;
+
+        // 현재 HP도 같은 비율로 늘려서 "강화 느낌"을 준다.
+        int newCurrent = Mathf.RoundToInt(currentHP * mul);
+        if (newCurrent > maxHP)
+        {
+            newCurrent = maxHP;
+        }
+        if (newCurrent < 1)
+        {
+            newCurrent = 1;
+        }
+        currentHP = newCurrent;
+
+        // UI 갱신
+        if (OnHPChanged != null)
+        {
+            OnHPChanged(currentHP, maxHP);
+        }
+    }
+
 }
