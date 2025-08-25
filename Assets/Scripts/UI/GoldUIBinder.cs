@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GoldUIBinder : MonoBehaviour
 {
     public GoldSystem gold;
-    public Text goldText; // "Gold: 123" 같은 텍스트
+    public TextMeshProUGUI goldText; // "Gold: 123" 같은 텍스트
 
     void Start()
     {

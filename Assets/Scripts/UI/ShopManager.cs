@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
     [Header("UI")]
     public GameObject shopPanel;  // 상점 패널(켜고/끄기)
-    public Text infoText;         // "구매 완료!" 또는 "골드 부족!" 표시
+    public TextMeshProUGUI infoText;         // "구매 완료!" 또는 "골드 부족!" 표시
 
     [Header("Prices")]
     public int priceMoveSpeed = 30;
@@ -77,6 +78,7 @@ public class ShopManager : MonoBehaviour
     {
         if (gold == null)
         {
+            CloseShop();
             return;
         }
 
@@ -87,6 +89,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "골드가 부족합니다.";
             }
 
+            CloseShop();
             return;
         }
         if (gold.Spend(priceMoveSpeed) == false)
@@ -96,6 +99,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "결제 실패!";
             }
 
+            CloseShop();
             return;
         }
         if (player != null)
@@ -115,6 +119,7 @@ public class ShopManager : MonoBehaviour
     {
         if (gold == null)
         {
+            CloseShop();
             return;
         }
 
@@ -125,6 +130,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "골드가 부족합니다.";
             }
 
+            CloseShop();
             return;
         }
         if (gold.Spend(priceAttackSpeed) == false)
@@ -134,6 +140,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "결제 실패!";
             }
 
+            CloseShop();
             return;
         }
 
@@ -154,6 +161,7 @@ public class ShopManager : MonoBehaviour
     {
         if (gold == null)
         {
+            CloseShop();
             return;
         }
 
@@ -164,6 +172,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "골드가 부족합니다.";
             }
 
+            CloseShop();
             return;
         }
         if (gold.Spend(priceHeal) == false)
@@ -173,6 +182,7 @@ public class ShopManager : MonoBehaviour
                 infoText.text = "결제 실패!";
             }
 
+            CloseShop();
             return;
         }
         if (player != null)

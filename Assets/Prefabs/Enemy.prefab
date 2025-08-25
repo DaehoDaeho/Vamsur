@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 3586467602829910557}
   - component: {fileID: 6855435556320336589}
   - component: {fileID: 7181966692813709647}
+  - component: {fileID: -825097681946018030}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -812,3 +813,20 @@ MonoBehaviour:
   maxCount: 3
   xpPerOrb: 3
   spreadRadius: 0.5
+--- !u!114 &-825097681946018030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024030122826270753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d5a16fefcc35e49a306c15021a753e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 8636141003399475037, guid: 92005ce9838ff69468443df719394be9, type: 3}
+  minCount: 1
+  maxCount: 2
+  goldPerCoin: 1
+  spreadRadius: 0.4

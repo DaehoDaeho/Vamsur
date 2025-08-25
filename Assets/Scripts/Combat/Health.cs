@@ -84,6 +84,6 @@ public class Health : MonoBehaviour, IDmageable
         }
 
         currentHP = Mathf.Min(currentHP + amount, maxHP);
-        OnHPChanged?.Invoke(currentHP, maxHP); // 3일차 UI바인더가 이 이벤트를 듣고 있었죠
+        OnHPChanged?.Invoke(currentHP, maxHP); // 3일차 UI바인더가 이 이벤트를 듣고 있음
     }
 }
