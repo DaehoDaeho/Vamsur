@@ -54,4 +54,15 @@ public class PlayerCore : MonoBehaviour
         float m = 1.0f + Mathf.Max(-0.9f, addPercent / 100.0f);
         movespeedMultiplier *= m;
     }
+
+    // PlayerCore.cs 안에 간단 래퍼 추가
+    public void Heal(int amount)
+    {
+        Health h = GetComponent<Health>();
+        if (h != null)
+        {
+            h.Heal(amount);
+        }
+    }
+
 }
