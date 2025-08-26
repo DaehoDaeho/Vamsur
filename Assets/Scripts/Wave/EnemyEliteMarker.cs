@@ -20,6 +20,12 @@ public class EnemyEliteMarker : MonoBehaviour
             sr.color = eliteColor;
         }
 
+        DamageFlash flash = GetComponent<DamageFlash>();
+        if (flash != null)
+        {
+            flash.SetBaseColor(eliteColor);
+        }
+
         // 2) 체력 배수 (Health에 함수 패치가 필요)
         Health hp = GetComponent<Health>();
         if (hp != null)

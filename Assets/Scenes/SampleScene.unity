@@ -1573,6 +1573,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254653358}
   m_CullTransparentMesh: 1
+--- !u!1 &262579254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 262579256}
+  - component: {fileID: 262579255}
+  m_Layer: 0
+  m_Name: DifficultyDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &262579255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262579254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc53f1daa5b76284aa005756e0d0c633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stepSeconds: 20
+  maxDifficulty: 10
+  eliteChanceStart: 0.05
+  eliteChancePerLevel: 0.03
+  eliteChanceMax: 0.4
+  eliteHpPercentPerLevel: 20
+  eliteSpeedPercentPerLevel: 8
+  eliteXpPercentPerLevel: 15
+  eliteGoldPercentPerLevel: 15
+  bossEveryNWaves: 5
+  difficultyLevel: 0
+--- !u!4 &262579256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262579254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312544210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,10 +6234,14 @@ MonoBehaviour:
   difficultyStepSeconds: 20
   intervalStepDelta: 0.2
   batchStepEveryN: 2
+  difficulty: {fileID: 262579255}
+  bossPrefab: {fileID: 9024030122826270753, guid: c1b7a87300b7d67428e55c0f319092b4, type: 3}
+  bossSpawnPoint: {fileID: 0}
   enemiesParent: {fileID: 0}
   waveText: {fileID: 80907994}
   timerText: {fileID: 414406612}
   aliveText: {fileID: 322749084}
+  publicWaveNumber: 1
 --- !u!4 &1659155758
 Transform:
   m_ObjectHideFlags: 0
@@ -7445,3 +7504,4 @@ SceneRoots:
   - {fileID: 919874671}
   - {fileID: 1659155758}
   - {fileID: 692146445}
+  - {fileID: 262579256}

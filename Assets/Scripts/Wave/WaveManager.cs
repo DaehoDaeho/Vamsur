@@ -121,7 +121,9 @@ public class WaveManager : MonoBehaviour
             TrySpawnBatch();
             nextSpawnTimer = spawnInterval; // 타이머 리셋
             waveNumber = waveNumber + 1;    // "웨이브" 느낌용 카운터
-            publicWaveNumber = waveNumber; // 외부 공개값도 동기화
+            //publicWaveNumber = waveNumber; // 외부 공개값도 동기화
+            publicWaveNumber = waveNumber;   // 외부/보스판정에서 쓰는 웨이브 값
+            bossSpawnedThisWave = false;     // 이번 웨이브엔 아직 보스를 안 뽑았음
         }
     }
 
