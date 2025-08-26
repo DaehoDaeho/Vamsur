@@ -783,7 +783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHealth: {fileID: 916709237192276798}
   fillImage: {fileID: 0}
-  slider: {fileID: 0}
+  slider: {fileID: 5063104637133210289}
 --- !u!114 &6855435556320336589
 MonoBehaviour:
   m_ObjectHideFlags: 0

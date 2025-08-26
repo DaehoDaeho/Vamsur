@@ -87,7 +87,6 @@ public class Health : MonoBehaviour, IDmageable
         OnHPChanged?.Invoke(currentHP, maxHP); // 3일차 UI바인더가 이 이벤트를 듣고 있음
     }
 
-    // Health.cs 내부에 아래 함수 하나 추가
     public void MultiplyMaxHpPercent(float percent)
     {
         // percent가 60이면 최댓값을 1.6배로 만든다.

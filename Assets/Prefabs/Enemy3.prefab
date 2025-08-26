@@ -672,6 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  externalSpeedMultiplier: 1
 --- !u!114 &-3706583603814032243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHealth: {fileID: 916709237192276798}
   fillImage: {fileID: 0}
-  slider: {fileID: 0}
+  slider: {fileID: 5063104637133210289}
 --- !u!61 &314949786747955072
 BoxCollider2D:
   m_ObjectHideFlags: 0

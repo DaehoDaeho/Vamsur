@@ -19,6 +19,7 @@ public class HealthBarWorld : MonoBehaviour
         }
 
         targetHealth.OnHPChanged += OnHPChanged;
+        OnHPChanged(targetHealth.currentHP, targetHealth.maxHP);
     }
 
     private void OnDisable()

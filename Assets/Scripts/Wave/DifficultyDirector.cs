@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// 시간을 재서 난이도 레벨을 관리한다.
+/// 현재 난이도에서 엘리트 확률과 강화 배수를 제공한다.
+/// 보스를 등장시킬 웨이브인지 판단한다.
+/// </summary>
 public class DifficultyDirector : MonoBehaviour
 {
     [Header("Time → Difficulty")]
