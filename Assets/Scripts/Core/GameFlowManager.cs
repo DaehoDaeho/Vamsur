@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
-/// [11일차] 게임 진행 총괄 매니저
 /// - ESC 토글: 일시정지/재개
 /// - 승리: 목표 생존 시간 달성
 /// - 패배: 플레이어 Health가 사망
@@ -58,11 +57,7 @@ public class GameFlowManager : MonoBehaviour
         // 1) ESC 일시정지 토글(이미 게임이 끝났다면 무시)
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
-            if (isGameOver == true)
-            {
-                // 게임 종료 상태에서는 토글 무시
-            }
-            else
+            if (isGameOver == false)
             {
                 TogglePause();
             }

@@ -1,7 +1,6 @@
 using UnityEngine;
 
 /// <summary>
-/// [11일차] 생존 통계 수집기
 /// - 생존 시간(초) 누적
 /// - 처치 수 누적(AddKill 호출로 증가)
 /// - 현재 골드 조회(결과창 표기용)
@@ -28,11 +27,7 @@ public class StatsTracker : MonoBehaviour
     void Update()
     {
         // 의도 명확화: 일시정지 중에는 시간 누적 안 함
-        if (Time.timeScale == 0f)
-        {
-            // 멈춤 상태이므로 생존 시간 증가 없음
-        }
-        else
+        if (Time.timeScale != 0f)
         {
             survivalTimeSeconds = survivalTimeSeconds + Time.deltaTime;
         }
@@ -40,11 +35,7 @@ public class StatsTracker : MonoBehaviour
 
     public void AddKill(int amount)
     {
-        if (amount <= 0)
-        {
-            // 잘못된 입력은 무시
-        }
-        else
+        if (amount > 0)
         {
             killCount = killCount + amount;
         }

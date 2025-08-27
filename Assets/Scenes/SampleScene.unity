@@ -4719,7 +4719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1395331922}
   stats: {fileID: 1812585507}
-  targetSurvivalSeconds: 120
+  targetSurvivalSeconds: 60
   resultPanel: {fileID: 694652892}
   txtTime: {fileID: 1812858091}
   txtKills: {fileID: 563779830}
