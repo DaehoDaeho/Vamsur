@@ -8,7 +8,8 @@ public class EnemyGoldDropper : MonoBehaviour
     public int goldPerCoin = 1;
     public float spreadRadius = 0.4f;
 
-    void OnDestroy()
+    //void OnDestroy()
+    public void CreateGold()
     {
         if (Application.isPlaying == false)
         {

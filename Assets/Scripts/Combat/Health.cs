@@ -73,6 +73,18 @@ public class Health : MonoBehaviour, IDmageable
             enemyDropper.CreateOrb();
         }
 
+        EnemyTracker enemyTracker = GetComponent<EnemyTracker>();
+        if(enemyTracker != null)
+        {
+            enemyTracker.ProcessDestroy();
+        }
+
+        EnemyGoldDropper enemyGoldDropper = GetComponent<EnemyGoldDropper>();
+        if (enemyGoldDropper != null)
+        {
+            enemyGoldDropper.CreateGold();
+        }
+
         Destroy(gameObject);
     }
 
@@ -125,4 +137,15 @@ public class Health : MonoBehaviour, IDmageable
         }
     }
 
+    public bool IsAliveNow()
+    {
+        if (currentHP > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
