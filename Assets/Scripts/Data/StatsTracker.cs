@@ -4,7 +4,6 @@ using UnityEngine;
 /// - 생존 시간(초) 누적
 /// - 처치 수 누적(AddKill 호출로 증가)
 /// - 현재 골드 조회(결과창 표기용)
-/// 규칙: 모든 if는 블록 사용, 조건은 명확하게 작성.
 /// </summary>
 public class StatsTracker : MonoBehaviour
 {

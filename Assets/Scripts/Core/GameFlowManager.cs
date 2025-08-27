@@ -8,7 +8,6 @@ using TMPro;
 /// - 승리: 목표 생존 시간 달성
 /// - 패배: 플레이어 Health가 사망
 /// - 결과창 UI 업데이트 + 재시작 버튼
-/// 규칙: 모든 if는 블록 사용, 조건은 명확하게 작성.
 /// </summary>
 public class GameFlowManager : MonoBehaviour
 {
