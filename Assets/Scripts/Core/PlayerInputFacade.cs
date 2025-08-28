@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInputFacade : MonoBehaviour
 {
+    public Animator animator;
     private PlayerCore player;
 
     private void Awake()
@@ -24,5 +25,13 @@ public class PlayerInputFacade : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
         Vector2 input = new Vector2(x, y).normalized;
         player.SetMoveInput(input);
+
+        bool move = false;
+        if (x != 0.0f || y != 0.0f)
+        {
+            move = true;
+        }
+
+        animator.SetBool("Move", move);
     }
 }
