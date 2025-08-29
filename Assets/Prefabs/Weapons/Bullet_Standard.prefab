@@ -178,4 +178,4 @@ MonoBehaviour:
   dir: {x: 1, y: 0}
   hitMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
