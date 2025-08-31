@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4322951390756677320}
   - component: {fileID: 735217536681566453}
   - component: {fileID: 6080178540547151}
+  - component: {fileID: 596846084203397010}
   m_Layer: 0
   m_Name: Bullet_Standard
   m_TagString: Untagged
@@ -179,3 +180,25 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &596846084203397010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193177735181367575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddec624615f5fa947acff59f3e4a4fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  applyBurn: 1
+  burnTickDamage: 2
+  burnDuration: 3
+  burnTickInterval: 0.5
+  applySlow: 1
+  slowPercent: 30
+  slowDuration: 2
