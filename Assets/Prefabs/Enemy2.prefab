@@ -543,6 +543,8 @@ GameObject:
   - component: {fileID: 7876862069194795893}
   - component: {fileID: 2122069789304517437}
   - component: {fileID: -7934558936323590126}
+  - component: {fileID: 5488837785061378617}
+  - component: {fileID: 2157303036830496945}
   m_Layer: 6
   m_Name: Enemy2
   m_TagString: Enemy
@@ -831,3 +833,39 @@ MonoBehaviour:
   maxCount: 2
   goldPerCoin: 1
   spreadRadius: 0.4
+--- !u!114 &5488837785061378617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024030122826270753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cd4493af7be0d4e926f9ca8c02149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 4943438456554024348}
+  health: {fileID: 916709237192276798}
+  speed: 1.4
+  hp: 80
+  knockbackResistance: 0.7
+--- !u!114 &2157303036830496945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024030122826270753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27959653ebe61a649a6310af9b29a24c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  stopDistance: 0.2
+  contactDamage: 5
+  contactRadius: 0.4
+  damageCooldown: 0.6
+  player: {fileID: 0}
+  core: {fileID: 4943438456554024348}

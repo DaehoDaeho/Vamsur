@@ -2807,7 +2807,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456178240}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MountWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4295,7 +4295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 818274406}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4634,7 +4634,7 @@ GameObject:
   - component: {fileID: 867253780}
   - component: {fileID: 867253782}
   - component: {fileID: 867253781}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Magnet
   m_TagString: PlayerMagnet
   m_Icon: {fileID: 0}
@@ -5447,7 +5447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5932,7 +5932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5980,7 +5980,7 @@ GameObject:
   - component: {fileID: 1395331927}
   - component: {fileID: 1395331928}
   - component: {fileID: 1395331929}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6997,6 +6997,13 @@ MonoBehaviour:
   timerText: {fileID: 414406612}
   aliveText: {fileID: 322749084}
   publicWaveNumber: 1
+  options:
+  - prefab: {fileID: 9024030122826270753, guid: 68d74d4418d58a94f8b2e62b66daa1d0, type: 3}
+    weight: 6
+  - prefab: {fileID: 9024030122826270753, guid: a41bbf2831d12d14094235dff4a4058e, type: 3}
+    weight: 2
+  - prefab: {fileID: 9024030122826270753, guid: a33162823efc9f24c952f2118214bfa6, type: 3}
+    weight: 2
 --- !u!4 &1659155758
 Transform:
   m_ObjectHideFlags: 0
