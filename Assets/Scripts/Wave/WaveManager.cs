@@ -403,6 +403,15 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        if(boss != null)
+        {
+            EnemyCore enemyCore = boss.GetComponent<EnemyCore>();
+            if (enemyCore != null)
+            {
+                enemyCore.isBoss = true;
+            }
+        }
+
         bossSpawnedThisWave = true;
         // 웨이브가 증가하면 자동으로 false로 초기화되게 해주기(아래 한 줄을 waveNumber 증가 직후에 넣자)
         // bossSpawnedThisWave = false;  ← 이 줄은 waveNumber가 증가한 직후에 넣어주세요.

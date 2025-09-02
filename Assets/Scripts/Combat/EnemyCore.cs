@@ -8,6 +8,7 @@ public class EnemyCore : MonoBehaviour
 {
     public float moveSpeed = 2.0f;
     public float externalSpeedMultiplier = 1f;
+    public bool isBoss = false;
 
     private Transform target;
 
@@ -46,6 +47,11 @@ public class EnemyCore : MonoBehaviour
         if (health.IsAlive == false || target == null)
         {
             rb.velocity = Vector2.zero;
+            return;
+        }
+
+        if(isBoss == false)
+        {
             return;
         }
 
