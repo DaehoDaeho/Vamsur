@@ -57,7 +57,7 @@ public class EnemyChaseAI : MonoBehaviour
         }
 
         // 1) 이동.
-        Vector2 toPlayer = player.position - transform.position;
+        Vector2 toPlayer = player.position - transform.position;    // 방향을 알아내기 위한 계산식.
         float dist = toPlayer.magnitude;
 
         float speed = moveSpeed;
@@ -68,7 +68,7 @@ public class EnemyChaseAI : MonoBehaviour
 
         if (dist > stopDistance)
         {
-            Vector2 dir = toPlayer.normalized;
+            Vector2 dir = toPlayer.normalized;  // 벡터 정규화. 벡터의 크기를 1로 만든다. 방향 정보만 사용하기 위해서.
             Vector2 v = dir * speed;
             _rb.velocity = v;
         }

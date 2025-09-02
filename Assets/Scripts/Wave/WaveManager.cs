@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-[System.Serializable]
+[System.Serializable]   // 직렬화.
 public class SpawnOption
 {
     public GameObject prefab; // Runner / Tanker / Ranged 프리팹.
@@ -154,6 +154,10 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 가중치를 적용해서 3가지 래턴 중의 적 중 하나를 선택해서 반환함.
+    /// </summary>
+    /// <returns></returns>
     GameObject PickRandomPrefab()
     {
         if (options == null || options.Length == 0)
