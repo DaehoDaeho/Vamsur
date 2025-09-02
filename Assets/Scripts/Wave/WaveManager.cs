@@ -226,19 +226,35 @@ public class WaveManager : MonoBehaviour
 
         // 인스턴스 생성(풀 있으면 풀 사용, 없으면 Instantiate)
         GameObject go;
+        //if (PoolManager.Instance != null)
+        //{
+        //    go = PoolManager.Instance.Spawn(prefab, pos, Quaternion.identity, enemiesParent);
+        //}
+        //else
+        //{
+        //    if (enemiesParent != null)
+        //    {
+        //        go = Instantiate(prefab, pos, Quaternion.identity, enemiesParent);
+        //    }
+        //    else
+        //    {
+        //        go = Instantiate(prefab, pos, Quaternion.identity);
+        //    }
+        //}
+
         if (PoolManager.Instance != null)
         {
-            go = PoolManager.Instance.Spawn(prefab, pos, Quaternion.identity, enemiesParent);
+            go = PoolManager.Instance.Spawn(pf, pos, Quaternion.identity, enemiesParent);
         }
         else
         {
             if (enemiesParent != null)
             {
-                go = Instantiate(prefab, pos, Quaternion.identity, enemiesParent);
+                go = Instantiate(pf, pos, Quaternion.identity, enemiesParent);
             }
             else
             {
-                go = Instantiate(prefab, pos, Quaternion.identity);
+                go = Instantiate(pf, pos, Quaternion.identity);
             }
         }
 
