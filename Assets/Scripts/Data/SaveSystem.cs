@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 /// <summary>
 /// SaveData를 JSON으로 저장하고 불러오는 간단한 시스템.
@@ -27,6 +28,12 @@ public static class SaveSystem
         string json = JsonUtility.ToJson(gameData, true); // 보기 좋게 들여쓰기
         File.WriteAllText(FilePath, json);
 
+        //BinaryFormatter rouletteBf = new BinaryFormatter();
+        //FileStream rouletteFile = File.Open(FilePath, FileMode.Create);
+
+        //rouletteBf.Serialize(rouletteFile, gameData);
+        //rouletteFile.Close();
+
         Debug.Log("저장 완료: " + FilePath);
     }
 
@@ -40,6 +47,12 @@ public static class SaveSystem
 
         string json = File.ReadAllText(FilePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        //BinaryFormatter bf = new BinaryFormatter();
+        //FileStream file = File.Open(FilePath, FileMode.Open);
+        //SaveData saveData = (SaveData)bf.Deserialize(file);
+        //file.Close();
+
         return data;
     }
 
