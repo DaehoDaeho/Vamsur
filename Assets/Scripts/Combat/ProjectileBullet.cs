@@ -82,6 +82,7 @@ public class ProjectileBullet : MonoBehaviour
         {
             // 실제 데미지 적용
             h.TakeDamage(damage, other.transform.position);
+            AudioManager.Instance.PlaySFX("hit");
         }
 
         // 3) 관통 수 감소

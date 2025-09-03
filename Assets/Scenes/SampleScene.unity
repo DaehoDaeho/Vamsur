@@ -10493,7 +10493,11 @@ MonoBehaviour:
   sliderMaster: {fileID: 1949377084}
   sliderBGM: {fileID: 28175220}
   sliderSFX: {fileID: 424351422}
-  sfxList: []
+  sfxList:
+  - key: attack
+    clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  - key: hit
+    clip: {fileID: 8300000, guid: 79e6baad2fd414b82a6d49ce1568d2e5, type: 3}
 --- !u!4 &2123997740
 Transform:
   m_ObjectHideFlags: 0

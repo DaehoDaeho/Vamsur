@@ -192,6 +192,7 @@ public class AutoAttackController : MonoBehaviour
         }
 
         b.Init(spawnPos, dir, projectileDamage, projectileSpeed, projectileRange, projectilePierce, projectileHitMask);
+        AudioManager.Instance.PlaySFX("attack");
     }
 
     // 간단한 조준 함수: 1) 가까운 적 있으면 그쪽, 2) 없으면 마지막 이동 방향, 3) 그래도 없으면 오른쪽

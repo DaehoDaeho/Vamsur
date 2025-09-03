@@ -135,5 +135,6 @@ public class EnemyRangedAI : MonoBehaviour
             b = go.AddComponent<ProjectileBullet>();
         }
         b.Init(spawnPos, dir, projectileDamage, projectileSpeed, projectileRange, projectilePierce, projectileHitMask);
+        AudioManager.Instance.PlaySFX("attack");
     }
 }
