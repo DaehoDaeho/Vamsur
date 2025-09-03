@@ -2107,7 +2107,7 @@ RectTransform:
   m_GameObject: {fileID: 328987033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 27390337}
@@ -10488,7 +10488,7 @@ MonoBehaviour:
   masterVolume: 0.8
   bgmVolume: 0.8
   sfxVolume: 0.8
-  startBGM: {fileID: 0}
+  startBGM: {fileID: 8300000, guid: 3c05ee244abf43141ac62e6ee55dbc1b, type: 3}
   audioPanel: {fileID: 1868955800}
   sliderMaster: {fileID: 1949377084}
   sliderBGM: {fileID: 28175220}
