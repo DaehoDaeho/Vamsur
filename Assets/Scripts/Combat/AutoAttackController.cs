@@ -146,7 +146,7 @@ public class AutoAttackController : MonoBehaviour
         // 공격 애니메이션 알림(플레이어 애니메이터에 Attack 표시)
         if (animSync != null)
         {
-            animSync.NotifyAttack();
+            //animSync.NotifyAttack();
         }
     }
 
