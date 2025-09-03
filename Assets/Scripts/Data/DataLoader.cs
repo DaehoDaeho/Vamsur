@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameAutoLoader : MonoBehaviour
+public class DataLoader : MonoBehaviour
 {
     void Start()
     {
@@ -10,7 +11,7 @@ public class GameAutoLoader : MonoBehaviour
         {
             AudioManager.Instance.HideAudioPanel();
             return;
-        }        
+        }
 
         AudioManager.Instance.SetMasterVolume(data.masterVolume);
         AudioManager.Instance.SetBGMVolume(data.bgmVolume);
