@@ -55,7 +55,7 @@ public class SimpleScrollViewController : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            string label = $"¾ÆÀÌÅÛ {i}";
+            string label = $"Item {i}";
             AddItem(label);
         }
 

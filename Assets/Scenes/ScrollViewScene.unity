@@ -263,7 +263,6 @@ GameObject:
   - component: {fileID: 408655684}
   - component: {fileID: 408655683}
   - component: {fileID: 408655686}
-  - component: {fileID: 408655687}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -377,28 +376,6 @@ MonoBehaviour:
   content: {fileID: 1174253928}
   itemPrefab: {fileID: 985879670425876016, guid: 9897b994b73b9e249b197987e5d7c306, type: 3}
   initialItemCount: 100
---- !u!114 &408655687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408655681}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5564353024540d4185f77ed3a06729c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollRect: {fileID: 408655683}
-  viewport: {fileID: 450426630}
-  content: {fileID: 1174253928}
-  itemPrefab: {fileID: 7106963276947626588, guid: 9897b994b73b9e249b197987e5d7c306, type: 3}
-  initialItemCount: 30
-  leftPadding: 0
-  topPadding: 0
-  spacing: 0
-  bufferCount: 2
-  innerTextPadding: 8
 --- !u!1 &450426629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,8 +996,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 807267579}
   m_HandleRect: {fileID: 807267578}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
