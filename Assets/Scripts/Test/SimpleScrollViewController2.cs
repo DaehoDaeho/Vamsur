@@ -1,44 +1,43 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;   // ScrollRect, Text
-using TMPro;           // TMP_Text (프로젝트에서 TMP를 안 쓰면 이 using을 삭제하세요)
+using UnityEngine.UI;          // ScrollRect, Text, LayoutRebuilder
+using TMPro;                   // TMP_Text
 
 /// <summary>
-/// 아이템의 가로/세로 크기를 "프리팹 원본 크기 그대로" 사용하면서,
-/// 화면에 보이는 셀만 생성/재사용하는 가상화 리스트의 최소 구현입니다.
-/// - 가로 Stretch 미사용(폭을 전혀 건드리지 않음).
-/// - 세로 높이도 프리팹 원본 높이 그대로 사용(계산에만 참조).
-/// - 셀 앵커/피벗을 좌상단으로 강제하여 중앙→왼쪽 이동 문제 차단.
-/// - Content의 레이아웃 드라이버 자동 비활성화(몇 개만 스크롤되는 문제 차단).
-/// 전제: 모든 아이템의 최종 높이는 동일(동일 프리팹)하다고 가정합니다.
+/// SimpleScrollViewController (원본 크기 유지 + 가상화 + 확실한 버그픽스)
+/// - 프리팹의 "폭/높이" 그대로 사용(Stretch 안 함).
+/// - 보이는 셀(+버퍼)만 생성/재사용(가상화).
+/// - 프리팹 높이를 임시 인스턴스로 '실측'하여 Content 높이를 정확히 계산.
+/// - 셀/텍스트를 좌상단 앵커로 강제, 드래그 중에도 X축을 완전 고정(LateUpdate).
+/// - Viewport/Content의 레이아웃 드라이버를 자동으로 비활성화.
 /// </summary>
 [RequireComponent(typeof(ScrollRect))]
 public class SimpleScrollViewController2 : MonoBehaviour
 {
     [Header("References (필수)")]
-    public ScrollRect scrollRect;        // 세로 스크롤 컨트롤;
-    public RectTransform viewport;       // 보이는 창(보통 scrollRect.viewport);
-    public RectTransform content;        // 스크롤 컨테이너;
-    public RectTransform itemPrefab;     // 한 줄 아이템 프리팹(폭/높이 원본 유지);
+    public ScrollRect scrollRect;            // 세로 스크롤 컨트롤;
+    public RectTransform viewport;           // 보이는 창(보통 scrollRect.viewport);
+    public RectTransform content;            // 스크롤 컨테이너;
+    public RectTransform itemPrefab;         // 한 줄 아이템 프리팹(폭/높이 원본 유지);
 
     [Header("Behavior")]
-    public int initialItemCount = 1000;  // 내부에서 생성할 아이템 개수(테스트용으로 크게 가능);
+    public int initialItemCount = 1000;      // 내부에서 생성할 항목 수;
 
     [Header("Layout")]
-    public float leftPadding = 0.0f;     // 좌측 여백(아이템 X 위치);
-    public float topPadding = 0.0f;      // 상단 여백;
-    public float spacing = 0.0f;         // 아이템 간격(세로);
-    public int bufferCount = 2;          // 화면 밖 버퍼 셀 개수;
+    public float leftPadding = 0.0f;         // 아이템 X 시작 위치;
+    public float topPadding = 0.0f;          // 상단 여백;
+    public float spacing = 0.0f;             // 세로 간격;
+    public int bufferCount = 2;              // 화면 밖 버퍼 셀 개수;
 
     [Header("Text Fix")]
-    public float innerTextPadding = 8.0f; // 셀 내부 텍스트 좌측 패딩(px); 프리팹을 건드리지 않고 런타임 교정
+    public float innerTextPadding = 8.0f;    // 텍스트 좌측 패딩(px); 프리팹 수정 없이 런타임 교정
 
     // 내부 상태
-    private readonly List<string> items = new List<string>();                 // 표시할 텍스트 데이터;
-    private readonly List<RectTransform> cellPool = new List<RectTransform>(); // 재사용 셀 풀;
-    private int poolSize = 0;                                                  // 생성된 셀 수;
-    private int firstVisibleIndex = -1;                                        // 현재 첫 가시 인덱스 캐시;
-    private float prefabItemHeight = 0.0f;                                     // 프리팹 원본 높이;
+    private readonly List<string> items = new List<string>();
+    private readonly List<RectTransform> cellPool = new List<RectTransform>();
+    private int poolSize = 0;
+    private int firstVisibleIndex = -1;
+    private float itemHeight = 0.0f;         // 실측한 프리팹 높이;
     private bool initialized = false;
 
     private void Reset()
@@ -83,43 +82,47 @@ public class SimpleScrollViewController2 : MonoBehaviour
 
     private void Start()
     {
-        InitializeIfNeeded();            // Content/앵커 세팅 + 레이아웃 무력화;
+        InitializeIfNeeded();
         CreateInitialData(initialItemCount);
-        ComputePrefabHeight();           // 프리팹 "원본 높이" 측정;
-        UpdateContentHeight();           // 전체 콘텐츠 높이 계산(원본 높이 기반);
-        BuildPool();                     // 보이는 셀(+버퍼)만 프리팹 인스턴스화;
 
+        // ★ 프리팹 높이를 '실측'해서 얻는다(스크롤 막힘 방지의 핵심)
+        itemHeight = ProbeItemHeight();
+
+        UpdateContentHeight();
+        BuildPool();
+
+        // 첫 프레임부터 정확한 위치로 배치
         Canvas.ForceUpdateCanvases();
-        Refresh(true);                   // 최초 바인딩;
+        Refresh(true);
 
+        // 세로 스크롤만 사용하고 엣지 바운스 최소화
         if (scrollRect != null)
         {
-            // 세로 스크롤만 사용하고, 엣지 바운스 최소화
             scrollRect.horizontal = false;
             scrollRect.vertical = true;
             scrollRect.movementType = ScrollRect.MovementType.Clamped;
+            scrollRect.inertia = false;          // 가로 흔들림 방지에 도움
+            scrollRect.elasticity = 0.05f;
         }
 
-        // X축 흔들림 방지(초기 프레임부터 고정)
-        LockContentX();
+        // 시작 직후 X 고정
+        LockContentAndCellsX();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        // 드문 프레임에서 X축이 미세하게 움직일 수 있으니 잠금 유지
-        LockContentX();
+        // ★ ScrollRect가 프레임 말미에 X를 미세 변경하는 케이스가 있어 여기서 완전 고정
+        LockContentAndCellsX();
     }
 
-    /// <summary>
-    /// 스크롤 값이 변하면 보이는 셀만 재바인딩합니다.
-    /// </summary>
     private void OnScrollValueChanged(Vector2 _)
     {
         Refresh(false);
-        LockContentX();
+        // 스크롤 중 가로 흔들림 방지
+        LockContentAndCellsX();
     }
 
-    // -------------------- 초기화/데이터/레이아웃 --------------------
+    // -------------------- 초기화/데이터 --------------------
 
     private void InitializeIfNeeded()
     {
@@ -134,40 +137,34 @@ public class SimpleScrollViewController2 : MonoBehaviour
             return;
         }
 
-        // Content: 좌상단 기준(상단 고정, 가로는 부모에 스트레치되지만 자식 셀 폭은 건드리지 않음)
+        // Content: 좌상단 기준(상단 고정)
         content.pivot = new Vector2(0.0f, 1.0f);
         content.anchorMin = new Vector2(0.0f, 1.0f);
         content.anchorMax = new Vector2(1.0f, 1.0f);
         content.anchoredPosition = Vector2.zero;
 
-        // 가상화에서 레이아웃 드라이버는 금지 → 자동 비활성화
-        DisableLayoutDriversOnContent();
+        // ★ 레이아웃 드라이버 금지: Viewport/Content 모두에서 비활성화
+        DisableLayoutDrivers(viewport);
+        DisableLayoutDrivers(content);
 
         initialized = true;
     }
 
-    private void DisableLayoutDriversOnContent()
+    private void DisableLayoutDrivers(RectTransform rt)
     {
-        VerticalLayoutGroup v = content.GetComponent<VerticalLayoutGroup>();
-        if (v != null)
+        if (rt == null)
         {
-            v.enabled = false;
+            return;
         }
-        HorizontalLayoutGroup h = content.GetComponent<HorizontalLayoutGroup>();
-        if (h != null)
-        {
-            h.enabled = false;
-        }
-        GridLayoutGroup g = content.GetComponent<GridLayoutGroup>();
-        if (g != null)
-        {
-            g.enabled = false;
-        }
-        ContentSizeFitter f = content.GetComponent<ContentSizeFitter>();
-        if (f != null)
-        {
-            f.enabled = false;
-        }
+
+        VerticalLayoutGroup v = rt.GetComponent<VerticalLayoutGroup>();
+        if (v != null) { v.enabled = false; }
+        HorizontalLayoutGroup h = rt.GetComponent<HorizontalLayoutGroup>();
+        if (h != null) { h.enabled = false; }
+        GridLayoutGroup g = rt.GetComponent<GridLayoutGroup>();
+        if (g != null) { g.enabled = false; }
+        ContentSizeFitter f = rt.GetComponent<ContentSizeFitter>();
+        if (f != null) { f.enabled = false; }
     }
 
     private void CreateInitialData(int count)
@@ -184,21 +181,58 @@ public class SimpleScrollViewController2 : MonoBehaviour
         }
     }
 
-    private void ComputePrefabHeight()
+    /// <summary>
+    /// 프리팹 높이를 '실측'합니다.
+    /// - 프리팹이 씬 밖일 때 rect.height가 0인 문제를 피하려고
+    ///   임시 인스턴스를 Content 아래에 만들어 레이아웃을 강제 갱신한 뒤 측정합니다.
+    /// </summary>
+    private float ProbeItemHeight()
     {
-        // 프리팹 원본 높이 측정(씬 밖 프리팹이면 rect.height가 0일 수 있어 sizeDelta.y로 보정)
+        // 1) 먼저 프리팹 자체에서 얻어보고(성공하면 빠르게 종료)
         float h = itemPrefab.rect.height;
         if (h <= 0.0f)
         {
             h = itemPrefab.sizeDelta.y;
         }
+        if (h > 1.0f)
+        {
+            return h;
+        }
+
+        // 2) 임시 셀로 실측
+        RectTransform probe = Instantiate(itemPrefab, content);
+        probe.name = "_HeightProbe";
+        SetupCellTopLeftAnchors(probe);
+        FixupTextRects(probe);
+
+        // 레이아웃 강제 적용 후 측정
+        LayoutRebuilder.ForceRebuildLayoutImmediate(probe);
+        Canvas.ForceUpdateCanvases();
+
+        h = probe.rect.height;
         if (h <= 0.0f)
         {
-            // 에지 케이스 보호(원본 크기를 알 수 없을 때 최소값)
-            h = 64.0f;
+            LayoutElement le = probe.GetComponent<LayoutElement>();
+            if (le != null && le.preferredHeight > 0.0f)
+            {
+                h = le.preferredHeight;
+            }
         }
-        prefabItemHeight = h;
+        if (h <= 0.0f)
+        {
+            h = probe.sizeDelta.y;
+        }
+        if (h <= 0.0f)
+        {
+            h = 64.0f; // 최후의 보호값
+        }
+
+        // 임시 셀 제거
+        Destroy(probe.gameObject);
+        return h;
     }
+
+    // -------------------- 풀 구성/바인딩 --------------------
 
     private void UpdateContentHeight()
     {
@@ -208,8 +242,10 @@ public class SimpleScrollViewController2 : MonoBehaviour
         }
 
         float rows = (float)items.Count;
-        float total = topPadding + Mathf.Max(rows * (prefabItemHeight + spacing) - spacing, 0.0f);
+        float total = topPadding + Mathf.Max(rows * (itemHeight + spacing) - spacing, 0.0f);
 
+        // sizeDelta와 SetSizeWithCurrentAnchors를 둘 다 사용해 부모 레이아웃 간섭을 회피
+        content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, total);
         Vector2 size = content.sizeDelta;
         size.y = total;
         content.sizeDelta = size;
@@ -217,7 +253,6 @@ public class SimpleScrollViewController2 : MonoBehaviour
 
     private void BuildPool()
     {
-        // 기존 풀 제거
         for (int i = 0; i < cellPool.Count; i++)
         {
             RectTransform c = cellPool[i];
@@ -232,20 +267,18 @@ public class SimpleScrollViewController2 : MonoBehaviour
         float viewportHeight = (viewport != null) ? viewport.rect.height : 0.0f;
         if (viewportHeight <= 0.0f)
         {
-            viewportHeight = prefabItemHeight * 8.0f; // 초기 프레임 방어값
+            viewportHeight = itemHeight * 8.0f; // 초기 프레임 방어값
         }
 
-        int visibleCount = (prefabItemHeight > 0.0f) ? Mathf.CeilToInt(viewportHeight / prefabItemHeight) : 0;
+        int visibleCount = (itemHeight > 0.0f) ? Mathf.CeilToInt(viewportHeight / itemHeight) : 0;
         int desiredPool = Mathf.Max(visibleCount + bufferCount, 1);
 
         for (int i = 0; i < desiredPool; i++)
         {
             RectTransform cell = Instantiate(itemPrefab, content);
             cell.name = $"Cell_{i:000}";
-
-            // 원본 폭/높이 그대로, 좌상단 기준으로 배치
             SetupCellTopLeftAnchors(cell);
-            FixupTextRects(cell);              // 프리팹 텍스트 앵커/패딩 교정(왼쪽 잘림 방지)
+            FixupTextRects(cell);
 
             if (cell.gameObject.activeSelf == false)
             {
@@ -259,8 +292,6 @@ public class SimpleScrollViewController2 : MonoBehaviour
         firstVisibleIndex = -1; // 다음 Refresh에서 강제 갱신
     }
 
-    // -------------------- 바인딩/스크롤 --------------------
-
     private void Refresh(bool force)
     {
         if (content == null || viewport == null)
@@ -270,8 +301,8 @@ public class SimpleScrollViewController2 : MonoBehaviour
 
         float offsetY = content.anchoredPosition.y;
 
-        // 보이는 첫 인덱스 계산(프리팹 "원본 높이" 기반)
-        int newFirst = (prefabItemHeight > 0.0f) ? Mathf.FloorToInt((offsetY - topPadding) / (prefabItemHeight + spacing)) : 0;
+        // 보이는 첫 인덱스(상단 여백/간격 반영)
+        int newFirst = (itemHeight > 0.0f) ? Mathf.FloorToInt((offsetY - topPadding) / (itemHeight + spacing)) : 0;
         if (newFirst < 0)
         {
             newFirst = 0;
@@ -302,10 +333,10 @@ public class SimpleScrollViewController2 : MonoBehaviour
                     cell.gameObject.SetActive(true);
                 }
 
-                // 좌상단 기준 절대 배치: X는 leftPadding, Y는 원본 높이 간격으로 계산
+                // 좌상단 기준 절대 배치
                 Vector2 pos = cell.anchoredPosition;
                 pos.x = leftPadding;
-                pos.y = -topPadding - dataIndex * (prefabItemHeight + spacing);
+                pos.y = -topPadding - dataIndex * (itemHeight + spacing);
                 cell.anchoredPosition = pos;
 
                 ApplyLabelToCell(cell, items[dataIndex]);
@@ -320,23 +351,38 @@ public class SimpleScrollViewController2 : MonoBehaviour
         }
     }
 
-    // Content의 X를 0으로 강제 고정(드래그 중 X축 흔들림 방지)
-    private void LockContentX()
+    // -------------------- 유틸 --------------------
+
+    // Content와 모든 셀의 X를 0/leftPadding으로 강제 고정(드래그 중 좌우 흔들림 완전 차단)
+    private void LockContentAndCellsX()
     {
-        if (content == null)
+        if (content != null)
         {
-            return;
+            Vector2 p = content.anchoredPosition;
+            if (p.x != 0.0f)
+            {
+                p.x = 0.0f;
+                content.anchoredPosition = p;
+            }
         }
 
-        Vector2 p = content.anchoredPosition;
-        if (p.x != 0.0f)
+        // 풀 크기만큼만 돌기 때문에 비용 미미
+        for (int i = 0; i < cellPool.Count; i++)
         {
-            p.x = 0.0f;
-            content.anchoredPosition = p;
+            RectTransform cell = cellPool[i];
+            if (cell != null)
+            {
+                Vector2 pos = cell.anchoredPosition;
+                if (pos.x != leftPadding)
+                {
+                    pos.x = leftPadding;
+                    cell.anchoredPosition = pos;
+                }
+            }
         }
     }
 
-    // 각 셀을 좌상단 기준으로 배치하도록 앵커/피벗 강제(폭/높이는 건드리지 않음)
+    // 각 셀을 좌상단 기준으로 배치(폭/높이는 프리팹 원본 유지)
     private void SetupCellTopLeftAnchors(RectTransform cell)
     {
         if (cell == null)
@@ -347,14 +393,11 @@ public class SimpleScrollViewController2 : MonoBehaviour
         cell.pivot = new Vector2(0.0f, 1.0f);
         cell.anchorMin = new Vector2(0.0f, 1.0f);
         cell.anchorMax = new Vector2(0.0f, 1.0f);
-
-        // 폭/높이를 원본 그대로 두기 위해 sizeDelta.x/y는 변경하지 않습니다.
-        // (Stretch로 저장된 프리셋의 잔여 offsetMin/offsetMax를 초기화)
         cell.offsetMin = Vector2.zero;
         cell.offsetMax = Vector2.zero;
     }
 
-    // 프리팹을 수정하지 않고, 런타임에 텍스트 자식들의 RectTransform을 좌상단 기준 + 좌측 패딩으로 교정
+    // 프리팹 수정 없이, 런타임에 텍스트들의 RectTransform을 좌상단 기준 + 좌측 패딩으로 교정
     private void FixupTextRects(RectTransform cell)
     {
         if (cell == null)
@@ -373,6 +416,7 @@ public class SimpleScrollViewController2 : MonoBehaviour
                 rt.anchorMax = new Vector2(0.0f, 1.0f);
                 rt.offsetMin = Vector2.zero;
                 rt.offsetMax = Vector2.zero;
+
                 Vector2 p = rt.anchoredPosition;
                 p.x = innerTextPadding;
                 p.y = 0.0f;
@@ -391,6 +435,7 @@ public class SimpleScrollViewController2 : MonoBehaviour
                 rt.anchorMax = new Vector2(0.0f, 1.0f);
                 rt.offsetMin = Vector2.zero;
                 rt.offsetMax = Vector2.zero;
+
                 Vector2 p = rt.anchoredPosition;
                 p.x = innerTextPadding;
                 p.y = 0.0f;
@@ -399,7 +444,7 @@ public class SimpleScrollViewController2 : MonoBehaviour
         }
     }
 
-    // 셀 내부 텍스트에 라벨 바인딩(TMP 우선, 없으면 uGUI Text)
+    // 텍스트 바인딩(TMP 우선, 없으면 uGUI Text)
     private void ApplyLabelToCell(RectTransform cell, string label)
     {
         if (cell == null)
@@ -420,7 +465,5 @@ public class SimpleScrollViewController2 : MonoBehaviour
             uText.text = label;
             return;
         }
-
-        Debug.LogWarning("[SimpleScrollViewController] 셀에서 텍스트 컴포넌트를 찾을 수 없습니다.");
     }
 }
