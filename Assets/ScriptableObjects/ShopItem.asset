@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b266f2aa3fd3149459e3ce1972c85d4a, type: 3}
+  m_Name: ShopItem
+  m_EditorClassIdentifier: 
+  listDatas:
+  - thumbnail: {fileID: 0}
+    name: Dagger
+    price: 100
+  - thumbnail: {fileID: 0}
+    name: Short Sword
+    price: 300
+  - thumbnail: {fileID: 0}
+    name: Long Sword
+    price: 500
+  - thumbnail: {fileID: 0}
+    name: Bastard Sword
+    price: 700
+  - thumbnail: {fileID: 0}
+    name: Hammer
+    price: 900
+  - thumbnail: {fileID: 0}
+    name: Gun
+    price: 300
+  - thumbnail: {fileID: 0}
+    name: Shot Gun
+    price: 600
+  - thumbnail: {fileID: 0}
+    name: Rocket Launcher
+    price: 900
+  - thumbnail: {fileID: 0}
+    name: Laser Rifle
+    price: 1200
