@@ -1,0 +1,5 @@
+id,name,itemType,price
+item_sword,LongSword,Weapon,5000
+item_hppotion,HPPotion,Potion,100
+item_mppotion,MPPotion,Potion,100
+item_magicscroll,MagicScroll,Scroll,3000

@@ -1,0 +1,4 @@
+id,name,maxHP,moveSpeed,prefabPath
+enemy_runner,Runner,35,3,Assets/Prefabs/Enemy.prefab
+enemy_tanker,Tanker,120,1.6,Assets/Prefabs/Enemy2.prefab
+enemy_ranged,Ranged,50,2.2,Assets/Prefabs/Enemy3.prefab
