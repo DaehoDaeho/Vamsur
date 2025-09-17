@@ -18,13 +18,16 @@ MonoBehaviour:
     maxHP: 35
     moveSpeed: 3
     prefab: {fileID: 9024030122826270753, guid: 68d74d4418d58a94f8b2e62b66daa1d0, type: 3}
+    icon: {fileID: 21300000, guid: 357f0d5e9be5312478fea3c264f443f5, type: 3}
   - id: enemy_tanker
     displayName: Tanker
     maxHP: 120
     moveSpeed: 1.6
     prefab: {fileID: 9024030122826270753, guid: a41bbf2831d12d14094235dff4a4058e, type: 3}
+    icon: {fileID: 21300000, guid: d5a96bd45cf27064aa035d65d172c76c, type: 3}
   - id: enemy_ranged
     displayName: Ranged
     maxHP: 50
     moveSpeed: 2.2
     prefab: {fileID: 9024030122826270753, guid: a33162823efc9f24c952f2118214bfa6, type: 3}
+    icon: {fileID: 21300000, guid: 1fe85a6bdea761245a7a7f190d80da67, type: 3}

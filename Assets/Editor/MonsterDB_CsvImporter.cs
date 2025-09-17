@@ -257,8 +257,9 @@ public class MonsterDB_CsvImporter : EditorWindow
         int hpCol = IndexOf(header, "maxHP");
         int speedCol = IndexOf(header, "moveSpeed");
         int prefabCol = IndexOf(header, "prefabPath");
+        int iconCol = IndexOf(header, "iconPath");
 
-        if (idCol < 0 || nameCol < 0 || hpCol < 0 || speedCol < 0 || prefabCol < 0)
+        if (idCol < 0 || nameCol < 0 || hpCol < 0 || speedCol < 0 || prefabCol < 0 || iconCol < 0)
         {
             Debug.LogWarning("monsters.csv: 헤더명이 올바르지 않습니다. (id,name,maxHP,moveSpeed,prefabPath)");
             return;
@@ -298,6 +299,9 @@ public class MonsterDB_CsvImporter : EditorWindow
                 Debug.LogWarning("monsters.csv: prefab 로드 실패: " + prefabPath + " (row " + r.ToString() + ")");
             }
 
+            string iconPath = GetCell(c, iconCol).Trim();
+            Sprite icon = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
+
             // 항목 구성
             MonsterDatabaseSO.MonsterDef def = new MonsterDatabaseSO.MonsterDef();
             def.id = id;
@@ -305,6 +309,7 @@ public class MonsterDB_CsvImporter : EditorWindow
             def.maxHP = maxHP;
             def.moveSpeed = moveSpeed;
             def.prefab = pf;
+            def.icon = icon;
 
             outList.Add(def);
 

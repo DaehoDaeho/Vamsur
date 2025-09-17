@@ -14,6 +14,7 @@ public class MonsterDatabaseSO : ScriptableObject
         public int maxHP;
         public float moveSpeed;
         public GameObject prefab;
+        public Sprite icon;
     }
 
     public List<MonsterDef> monsters = new List<MonsterDef>();
