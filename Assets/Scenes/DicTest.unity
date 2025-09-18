@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 49421200}
   - component: {fileID: 49421202}
   - component: {fileID: 49421203}
+  - component: {fileID: 49421204}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -242,6 +243,22 @@ MonoBehaviour:
   topDownMover: {fileID: 49421202}
   spriteRenderer: {fileID: 49421200}
   rigidbody2D: {fileID: 0}
+--- !u!114 &49421204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49421199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70dcf22b116de04c96b4d0f83fae973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dash: {fileID: 49421203}
+  sourceSprite: {fileID: 49421200}
+  spawnIntervalSeconds: 0.05
+  ghostLifetimeSeconds: 0.25
 --- !u!1 &169658025
 GameObject:
   m_ObjectHideFlags: 0
