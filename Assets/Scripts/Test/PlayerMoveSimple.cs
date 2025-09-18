@@ -6,6 +6,7 @@ public class PlayerMoveSimple : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
     public float maxDeltaTime = 0.05f;
+    public SpriteRenderer sr;
     public MapBounds mapBounds;
 
     // Update is called once per frame
@@ -22,7 +23,16 @@ public class PlayerMoveSimple : MonoBehaviour
             deltaTime = maxDeltaTime;
         }
 
-        Vector3 pos = transform.position;
+        if(x > 0.0f)
+        {
+            sr.flipX = false;
+        }
+        else if(x < 0.0f)
+        {
+            sr.flipX = true;
+        }
+
+            Vector3 pos = transform.position;
         Vector3 delta = new Vector3(dir.x, dir.y, 0.0f) * moveSpeed * deltaTime;
         Vector3 nextPos = pos + delta;
 
