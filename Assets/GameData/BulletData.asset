@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc929a0a6ae693b49a49ee75531fb926, type: 3}
-  m_Name: WeaponData
+  m_Script: {fileID: 11500000, guid: b9c039e0d755d0642a9ecab6cdc06346, type: 3}
+  m_Name: BulletData
   m_EditorClassIdentifier: 
   fireIntervalSeconds: 0.5
-  detectRadius: 8
-  damage: 10
+  detectRadius: 5
+  damage: 20
   projectileSpeed: 10
   projectileLifeSeconds: 3
-  pierceCount: 0
+  pierceCount: 2
   muzzleOffset: 0.6
   multishotCount: 10
-  totalSpreadAngleDegrees: 60
-  fireEventIfNoTarget: 0
+  totalSpreadAngleDegrees: 180
+  fireEvenIfNoTarget: 0

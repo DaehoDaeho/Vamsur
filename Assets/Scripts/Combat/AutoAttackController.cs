@@ -29,6 +29,7 @@ public class AutoAttackController : MonoBehaviour
     // (선택) 내부 상태: 마지막 이동 방향(적이 없을 때 방향 대체)
     private Vector2 lastMoveDir = Vector2.right;
     public Rigidbody2D playerRb;                      // 플레이어의 Rigidbody2D(이동 벡터 읽기)
+    public WeaponShooter weaponShooter;
     public ChainLaserController clc;
 
     private void Reset()
@@ -114,7 +115,8 @@ public class AutoAttackController : MonoBehaviour
     {
         if (useProjectile == true)
         {
-            FireProjectile();
+            //FireProjectile();
+            weaponShooter.TryFire();
         }
         else
         {

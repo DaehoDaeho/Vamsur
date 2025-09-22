@@ -3,7 +3,7 @@ using UnityEngine;
 public class WeaponShooter : MonoBehaviour
 {
     [SerializeField]
-    private WeaponDataSO[] weaponData;
+    private BulletDataSO weaponData;
 
     [SerializeField]
     private GameObject projectilePrefab;
@@ -13,23 +13,18 @@ public class WeaponShooter : MonoBehaviour
 
     private float lastFireTime = -9999.0f;
 
-    private int currentWeaponIndex = 0;
+    private float attackSpeedMultiplier = 1.0f;
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q) == true)
-        {
-            currentWeaponIndex = currentWeaponIndex == 0 ? 1 : 0;
-        }
-
-        if(Time.time - lastFireTime >= weaponData[currentWeaponIndex].fireIntervalSeconds)
-        {
-            TryFire();
-        }
+        //if(Time.time - lastFireTime >= weaponData.fireIntervalSeconds)
+        //{
+        //    TryFire();
+        //}
     }
 
-    void TryFire()
+    public void TryFire()
     {
         Transform nearest = FindNearestEnemy();
 
@@ -42,7 +37,7 @@ public class WeaponShooter : MonoBehaviour
         }
         else
         {
-            if (weaponData[currentWeaponIndex].fireEventIfNoTarget == true)
+            if (weaponData.fireEvenIfNoTarget == true)
             {
                 baseDir = Vector2.right;
             }
@@ -52,16 +47,16 @@ public class WeaponShooter : MonoBehaviour
             }
         }
 
-        int n = weaponData[currentWeaponIndex].multishotCount;
+        int n = weaponData.multishotCount;
         if(n <= 1)
         {
             FireOne(baseDir);
         }
         else
         {
-            float step = weaponData[currentWeaponIndex].totalSpreadAngleDegrees / (float)(n - 1);
+            float step = weaponData.totalSpreadAngleDegrees / (float)(n - 1);
 
-            float start = -weaponData[currentWeaponIndex].totalSpreadAngleDegrees * 0.5f;
+            float start = -weaponData.totalSpreadAngleDegrees * 0.5f;
 
             for(int i=0; i<n; ++i)
             {
@@ -77,13 +72,13 @@ public class WeaponShooter : MonoBehaviour
 
     void FireOne(Vector2 directionUnit)
     {
-        Vector3 spawnPos = transform.position + new Vector3(directionUnit.x, directionUnit.y, 0.0f) * weaponData[currentWeaponIndex].muzzleOffset;
+        Vector3 spawnPos = transform.position + new Vector3(directionUnit.x, directionUnit.y, 0.0f) * weaponData.muzzleOffset;
 
         GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         ProjectileStandard p = go.GetComponent<ProjectileStandard>();
         if(p != null)
         {
-            p.Setup(directionUnit, weaponData[currentWeaponIndex].damage, weaponData[currentWeaponIndex].projectileSpeed, weaponData[currentWeaponIndex].projectileLifeSeconds, weaponData[currentWeaponIndex].pierceCount);
+            p.Setup(directionUnit, weaponData.damage, weaponData.projectileSpeed, weaponData.projectileLifeSeconds, weaponData.pierceCount);
         }
     }
 
@@ -102,7 +97,7 @@ public class WeaponShooter : MonoBehaviour
 
     Transform FindNearestEnemy()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, weaponData[currentWeaponIndex].detectRadius, enemyLayerMask);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, weaponData.detectRadius, enemyLayerMask);
 
         Transform best = null;
         float bestSqr = 0.0f;

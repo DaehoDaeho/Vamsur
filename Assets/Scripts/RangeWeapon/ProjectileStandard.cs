@@ -1,8 +1,6 @@
 using UnityEditor.Rendering;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
 public class ProjectileStandard : MonoBehaviour
 {
     [SerializeField]
