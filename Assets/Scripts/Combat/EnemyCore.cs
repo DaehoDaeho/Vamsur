@@ -28,6 +28,14 @@ public class EnemyCore : MonoBehaviour
         {
             SetTarget(player.transform);
         }
+        else
+        {
+            GameObject go = GameObject.Find("Player");
+            if(go != null)
+            {
+                SetTarget(go.transform);
+            }
+        }
     }
 
     // Start is called before the first frame update
