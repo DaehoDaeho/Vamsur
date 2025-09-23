@@ -7169,6 +7169,7 @@ GameObject:
   - component: {fileID: 1395331929}
   - component: {fileID: 1395331930}
   - component: {fileID: 1395331931}
+  - component: {fileID: 1395331932}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -7526,6 +7527,20 @@ MonoBehaviour:
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1395331932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395331914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df23710a5d3c114c84b7747aed69f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  homingPrefab: {fileID: 9193177735181367575, guid: 7c58505553e68234fb80a6be6ffcc6ad, type: 3}
+  splitPrefab: {fileID: 9193177735181367575, guid: 2befebe6b0b6e174fa1ed0c895a6a243, type: 3}
 --- !u!1 &1419196465
 GameObject:
   m_ObjectHideFlags: 0

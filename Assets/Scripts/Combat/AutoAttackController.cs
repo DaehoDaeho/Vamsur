@@ -106,7 +106,7 @@ public class AutoAttackController : MonoBehaviour
         if(attackTimer <= 0.0f)
         {
             // 공격 처리.
-            PerformAttack();
+            //PerformAttack();
             attackTimer = interval;
         }
     }

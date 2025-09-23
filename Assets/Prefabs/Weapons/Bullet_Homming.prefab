@@ -161,13 +161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0bdd49b89e3b4d4f900dc5956010c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 50
   turnSpeedDegPerSec: 240
-  lifeTime: 3
+  lifeTime: 10
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   seekRadius: 6
   retargetInterval: 0.25
-  damage: 10
+  damage: 50
   rb: {fileID: 735217536681566453}

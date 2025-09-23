@@ -161,12 +161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1477bbe04943b984193cd49015ed26d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 9
-  lifeTime: 2
+  speed: 40
+  lifeTime: 5
   targetMask:
     serializedVersion: 2
     m_Bits: 64
-  damage: 8
+  damage: 10
   destroyOnHit: 1
   childBulletPrefab: {fileID: 0}
   splitCount: 7
