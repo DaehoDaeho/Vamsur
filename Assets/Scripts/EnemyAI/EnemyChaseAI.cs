@@ -86,7 +86,7 @@ public class EnemyChaseAI : MonoBehaviour
                 Health h = player.GetComponent<Health>();
                 if (h != null)
                 {
-                    h.TakeDamage(contactDamage, player.transform.position);
+                    h.TakeDamage(contactDamage + StatModifierAtNight.addctiveDamage, player.transform.position);
                 }
                 _damageTimer = damageCooldown;
             }

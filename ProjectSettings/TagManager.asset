@@ -55,6 +55,3 @@ TagManager:
   - name: Proof
     uniqueID: 595709205
     locked: 0
-  - name: WorldUI
-    uniqueID: 3889795813
-    locked: 0

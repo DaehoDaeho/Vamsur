@@ -63,5 +63,14 @@ public class DayNightController : MonoBehaviour
         {
             isNight = nowNight;
         }
+
+        if(isNight == true)
+        {
+            StatModifierAtNight.addctiveDamage = 10;
+        }
+        else
+        {
+            StatModifierAtNight.addctiveDamage = 0;
+        }
     }
 }

@@ -18,10 +18,10 @@ public class WeaponShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Time.time - lastFireTime >= weaponData.fireIntervalSeconds)
-        //{
-        //    TryFire();
-        //}
+        if (Time.time - lastFireTime >= weaponData.fireIntervalSeconds)
+        {
+            TryFire();
+        }
     }
 
     public void TryFire()

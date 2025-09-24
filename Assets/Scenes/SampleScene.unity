@@ -857,7 +857,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &104403748
 Transform:
   m_ObjectHideFlags: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 256
   edgeSoftness: 0.8
-  innerColor: {r: 1, g: 1, b: 0.95, a: 1}
+  innerColor: {r: 0.9212953, g: 1, b: 0, a: 1}
   radiusWorld: 3.5
   sr: {fileID: 104403750}
 --- !u!212 &104403750
