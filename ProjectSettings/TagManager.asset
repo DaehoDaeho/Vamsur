@@ -46,9 +46,15 @@ TagManager:
   - name: Background
     uniqueID: 2486366173
     locked: 0
+  - name: Lantern
+    uniqueID: 171591561
+    locked: 0
   - name: Actor
     uniqueID: 3905283609
     locked: 0
   - name: Proof
     uniqueID: 595709205
+    locked: 0
+  - name: WorldUI
+    uniqueID: 3889795813
     locked: 0
