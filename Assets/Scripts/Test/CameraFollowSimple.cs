@@ -11,6 +11,11 @@ public class CameraFollowSimple : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(target == null)
+        {
+            return;
+        }
+
         float minX;
         float maxX;
         float minY;

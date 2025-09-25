@@ -12,6 +12,8 @@ public class Health : MonoBehaviour, IDmageable
     public Action<int, Vector3> OnDamaged;
     public Action OnDied;
 
+    public bool invincible = false;
+
     public bool IsAlive => currentHP > 0;
 
     void Awake()
@@ -38,6 +40,11 @@ public class Health : MonoBehaviour, IDmageable
     public void TakeDamage(int amount, Vector3 hitPoint)
     {
         if (amount <= 0 || IsAlive == false)
+        {
+            return;
+        }
+
+        if(invincible == true)
         {
             return;
         }
