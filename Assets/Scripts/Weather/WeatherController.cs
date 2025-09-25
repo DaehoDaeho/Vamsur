@@ -52,6 +52,7 @@ public class WeatherController : MonoBehaviour
         {
             if (ps.isPlaying == false)
             {
+                //ps.gameObject.SetActive(true);
                 ps.Play();
             }
 
@@ -61,7 +62,6 @@ public class WeatherController : MonoBehaviour
 
             ParticleSystem.MinMaxCurve rateCurve = emission.rateOverTime;
             rateCurve.constant = rate;
-            emission.rateOverTime = rateCurve;
 
             // 2) 바람: X축 속도 가산(월드 공간)
             vel.enabled = true;
@@ -84,6 +84,7 @@ public class WeatherController : MonoBehaviour
             if (ps.isPlaying == true)
             {
                 ps.Stop();
+                //ps.gameObject.SetActive(false);
             }
         }
     }

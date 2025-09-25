@@ -13,6 +13,8 @@ public class DayNightController : MonoBehaviour
 
     public bool isNight = false;
 
+    public WeatherController weatherController;
+
     /// <summary>
     /// 현재 시간에서 '밤의 정도(0~1)'를 구한다.
     /// 0.5(정오) 부근은 0, 0 또는 1(자정) 근처는 1.
@@ -62,15 +64,27 @@ public class DayNightController : MonoBehaviour
         if (nowNight != isNight)
         {
             isNight = nowNight;
-        }
 
-        if(isNight == true)
-        {
-            StatModifierAtNight.addctiveDamage = 10;
-        }
-        else
-        {
-            StatModifierAtNight.addctiveDamage = 0;
+            if (isNight == true)
+            {
+                StatModifierAtNight.addctiveDamage = 10;
+            }
+            else
+            {
+                StatModifierAtNight.addctiveDamage = 0;
+            }
+
+            if(isNight == true)
+            {
+                weatherController.enableRain = false;
+                weatherController.enableSnow = false;
+            }
+            else
+            {
+                bool enableRain = Random.Range(0, 2) == 0 ? true : false;
+                weatherController.enableRain = enableRain;
+                weatherController.enableSnow = !enableRain;
+            }
         }
     }
 }
