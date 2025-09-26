@@ -32,6 +32,8 @@ public class AutoAttackController : MonoBehaviour
     public WeaponShooter weaponShooter;
     public ChainLaserController clc;
 
+    public GameObject frozenOrb;
+
     private void Reset()
     {
         if(weaponMount == null)
@@ -108,6 +110,11 @@ public class AutoAttackController : MonoBehaviour
             // 공격 처리.
             //PerformAttack();
             attackTimer = interval;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Y) == true)
+        {
+            GameObject go = Instantiate(frozenOrb, transform.position, Quaternion.identity);
         }
     }
 
